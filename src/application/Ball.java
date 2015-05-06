@@ -13,6 +13,7 @@ public class Ball {
 	double size;
 	double e;
 	private ReadOnlyDoubleProperty height, width;
+    Pane canvas;
 
 
 	public Ball (double size, int mass, double x, double y) {
@@ -27,13 +28,14 @@ public class Ball {
 	}
 
 	public void addTo(Pane canvas) {
-		canvas.getChildren().add(shape);
+		this.canvas = canvas;
+        canvas.getChildren().add(shape);
 	}
 
-	public void move(Pane canvas) {
-		if (isCollidingY(canvas)){
+	public void move() {
+		if (isCollidingY()){
 			bounceY();
-		} else if (isCollidingX(canvas)) {
+		} else if (isCollidingX()) {
 			bounceX();
 		} else {
 			shape.setTranslateY(shape.getTranslateY() + speedY);
@@ -55,7 +57,8 @@ public class Ball {
 	private void accelY(int acc) {
 		speedY += acc;
 	}
-	public boolean isCollidingY(Pane canvas) {
+
+	public boolean isCollidingY() {
 		width = canvas.widthProperty();
 		height = canvas.heightProperty();
 		if (shape.getTranslateY() + size >= height.doubleValue()){
@@ -63,7 +66,7 @@ public class Ball {
 		}
 		return false;
 	}
-	public boolean isCollidingX(Pane canvas) {
+	public boolean isCollidingX() {
 		width = canvas.widthProperty();
 		height = canvas.heightProperty();
 		if (shape.getTranslateX() + size >= width.doubleValue() || shape.getTranslateX() - size <= 0){
@@ -73,7 +76,10 @@ public class Ball {
 	}
 
 	public boolean isColliding(Ball other) {
-        return false;
+        double dx = this.getX() - other.getX();
+        double dy = this.getY() - other.getY();
+        double rad = this.getRadius() + other.getRadius();
+        return dx * dx + dy * dy < rad * rad;
 	}
 
 	public void setSpeed(int speedX, int speedY) {

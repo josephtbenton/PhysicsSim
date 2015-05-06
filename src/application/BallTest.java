@@ -14,7 +14,7 @@ public class BallTest {
 		ball.addTo(canvas);
 		canvas.setMinSize(100, 100);
 		assertEquals(-10, ball.speedY);
-		ball.move(canvas);
+		ball.move();
 		assertEquals(7, ball.speedY);
 		
 	}
@@ -23,8 +23,8 @@ public class BallTest {
 	public void CollisionTest() {
 		Pane canvas = new Pane();
 		Ball ball = new Ball(1,1,0,0);
-		assertTrue(ball.isCollidingX(canvas));
-		assertTrue(ball.isCollidingY(canvas));
+		assertTrue(ball.isCollidingX());
+		assertTrue(ball.isCollidingY());
 	}
 	
 	

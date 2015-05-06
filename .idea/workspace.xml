@@ -2,12 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="adb4c661-eadf-4d7c-9746-7aafb3d936ad" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="C:\Users\Joseph\IdeaProjects\PhysicsSim\bin\application\Ball.class" afterPath="C:\Users\Joseph\IdeaProjects\PhysicsSim\bin\application\Ball.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Ball.java" afterPath="$PROJECT_DIR$/src/application/Ball.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Controller.java" afterPath="$PROJECT_DIR$/src/application/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Gui.fxml" afterPath="$PROJECT_DIR$/src/application/Gui.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Main.java" afterPath="$PROJECT_DIR$/src/application/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/QuadTree.java" afterPath="$PROJECT_DIR$/src/application/QuadTree.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PhysicsSim.iws" />
@@ -401,7 +395,13 @@
       <option name="project" value="LOCAL" />
       <updated>1430886741563</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Bounces finally stop. Still a 1 px vibration in the Y direction. Next up: collision resolution between balls!!">
+      <created>1430898762401</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1430898762401</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">

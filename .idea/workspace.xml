@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="adb4c661-eadf-4d7c-9746-7aafb3d936ad" name="Default" comment="some work in animation">
+    <list default="true" id="adb4c661-eadf-4d7c-9746-7aafb3d936ad" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/Ball.class" afterPath="$PROJECT_DIR$/bin/application/Ball.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/BallTest.class" afterPath="$PROJECT_DIR$/bin/application/BallTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/Controller$1.class" afterPath="$PROJECT_DIR$/bin/application/Controller$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/Controller$2.class" afterPath="$PROJECT_DIR$/bin/application/Controller$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/Controller.class" afterPath="$PROJECT_DIR$/bin/application/Controller.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/Main.class" afterPath="$PROJECT_DIR$/bin/application/Main.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Ball.java" afterPath="$PROJECT_DIR$/src/application/Ball.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Controller.java" afterPath="$PROJECT_DIR$/src/application/Controller.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/application/Gui.fxml" afterPath="$PROJECT_DIR$/bin/application/Gui.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Gui.fxml" afterPath="$PROJECT_DIR$/src/application/Gui.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/application/Main.java" afterPath="$PROJECT_DIR$/src/application/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PhysicsSim.iws" />
@@ -391,6 +386,13 @@
       <option name="number" value="Default" />
       <updated>1429233519425</updated>
     </task>
+    <task id="LOCAL-00001" summary="Bounces finally stop. Still a 1 px vibration in the Y direction. Next up: collision resolution between balls!!">
+      <created>1430886734529</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1430886734529</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -433,6 +435,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Bounces finally stop. Still a 1 px vibration in the Y direction. Next up: collision resolution between balls!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bounces finally stop. Still a 1 px vibration in the Y direction. Next up: collision resolution between balls!!" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

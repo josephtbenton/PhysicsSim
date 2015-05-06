@@ -17,7 +17,7 @@ public class Ball {
 
 
 	public Ball (double size, int mass, double x, double y) {
-		shape = new Circle(0, 0, size, new Color(Math.random(), Math.random(), Math.random(), 1));
+		shape = new Circle(0, 0, size, Color.BLUE);
 		shape.setTranslateX(x);
 		shape.setTranslateY(y);
 		this.size = size;
@@ -49,13 +49,14 @@ public class Ball {
 		double correct = (shape.getTranslateY() + size - canvas.heightProperty().doubleValue()) / speedY ;
 		shape.setTranslateY(height.doubleValue()- size);
 		speedY *= -e;
-        speedY += 1;
+        speedY += 1 ;
         speedX += (speedX < 0 ? 1 : speedX == 0 ? 0 : -1);
         shape.setTranslateY(shape.getTranslateY() + speedY * correct);
         shape.setTranslateX(shape.getTranslateX() + speedX);
 	}
 	
 	private void bounceX() {
+        shape.setTranslateY(shape.getTranslateY() + speedY);
         shape.setTranslateX(shape.getTranslateX() > 0 + size ? width.doubleValue() - 1 - size: 1 + size);
 		speedX *= -e;
 	}
@@ -85,7 +86,7 @@ public class Ball {
         double dx = this.getX() - other.getX();
         double dy = this.getY() - other.getY();
         double rad = this.getRadius() + other.getRadius();
-        return other == this ? false : dx * dx + dy * dy < rad * rad;
+        return (other != this) && (((dx * dx) + (dy * dy)) < (rad * rad));
 	}
 
 	public void setSpeed(int speedX, int speedY) {

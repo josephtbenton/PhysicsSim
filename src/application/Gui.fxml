@@ -8,7 +8,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.Controller">
   <center>
-    <Pane fx:id="canvas" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
+    <Pane fx:id="canvas" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="800.0" prefWidth="800.0" BorderPane.alignment="CENTER" />
   </center>
   <top>
     <HBox BorderPane.alignment="CENTER">
@@ -16,6 +16,8 @@
         <Button mnemonicParsing="false" onAction="#start" text="Start" />
         <Button mnemonicParsing="false" onAction="#stop" text="Stop" />
         <Button mnemonicParsing="false" onAction="#clear" text="Clear" />
+        <Label fx:id="text" prefHeight="21.0" prefWidth="78.0" text="Balls: 0" />
+        <CheckBox fx:id="toggle" mnemonicParsing="false" text="Use QuadTree" />
       </children>
     </HBox>
   </top>

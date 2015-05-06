@@ -7,34 +7,47 @@ import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
 public class Controller {
 	private long FRAMES_PER_SEC = 60L;
 	private long NANO_INTERVAL = 1000000000L / FRAMES_PER_SEC;
-
+    private boolean optimize;
 	private AnimationTimer timer = new AnimationTimer() {
 		long last = 0;
-        QuadTree quad = new QuadTree(0, new Rectangle(0, 0, 800, 800));
+
 
 		@Override
 		public void handle(long now) {
+            QuadTree quad = new QuadTree(0, new Rectangle(0, 0, canvas.widthProperty().doubleValue(), canvas.heightProperty().doubleValue()));
             quad.clear();
             ArrayList<Ball> neighbors = new ArrayList<>();
 			if (now - last > NANO_INTERVAL) {
+                optimize = toggle.isSelected();
+                text.setText("Balls: " + Integer.toString(actors.size()));
+
 				for (Ball i: actors) {
 					i.move();
                     quad.insert(i);
 				}
+
                 for (Ball i: actors) {
-                    for (Ball other: quad.retrieve(neighbors, i)) {
+                    boolean colliding = false;
+                    for (Ball other: optimize ? quad.retrieve(neighbors, i) : actors) {
+
                         if (i.isColliding(other)) {
-                            System.out.println("COLLISION DETECTED");
+                            i.shape.setFill(Color.RED);
+                            colliding = true;
                         }
                     }
+                    if (!colliding) i.shape.setFill(Color.BLUE);
                 }
                 last = now;
 			}
@@ -43,20 +56,30 @@ public class Controller {
 
 	@FXML
 	Pane canvas;
+    @FXML
+    Label text;
+    @FXML
+    CheckBox toggle;
 	ArrayList<Ball> actors = new ArrayList<Ball>();
 
 	@FXML
 	public void initialize() {
-		canvas.addEventHandler(MouseEvent.MOUSE_RELEASED, 
-			       new EventHandler<MouseEvent>() {
-			           @Override
-			           public void handle(MouseEvent ev) {
-			        	   Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
-			        	   ball.addTo(canvas);
-			        	   actors.add(ball);
-			               
-			           }
-					});
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+                ev -> {
+                    if (ev.isMiddleButtonDown()) {
+                        Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
+                        ball.addTo(canvas);
+                        actors.add(ball);
+                    }
+                });
+
+		canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,
+                ev -> {
+                    Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
+                    ball.addTo(canvas);
+                    actors.add(ball);
+
+                });
 	}
 	@FXML
 	void start() {

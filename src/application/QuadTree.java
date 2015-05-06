@@ -20,7 +20,7 @@ public class QuadTree {
      */
     public QuadTree(int level, Rectangle bounds) {
         this.level = level;
-        objects = new ArrayList();
+        objects = new ArrayList<>();
         this.bounds = bounds;
         nodes = new QuadTree[4];
     }

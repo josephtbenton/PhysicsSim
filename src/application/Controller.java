@@ -18,7 +18,7 @@ public class Controller {
 
 	private AnimationTimer timer = new AnimationTimer() {
 		long last = 0;
-        QuadTree quad = new QuadTree(0, new Rectangle(0, 0, 600, 400));
+        QuadTree quad = new QuadTree(0, new Rectangle(0, 0, 800, 800));
 
 		@Override
 		public void handle(long now) {

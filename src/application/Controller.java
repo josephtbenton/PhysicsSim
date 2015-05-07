@@ -22,27 +22,21 @@ public class Controller {
     private boolean optimize;
 	private AnimationTimer timer = new AnimationTimer() {
 		long last = 0;
-
+        int fps = 0;
 
 		@Override
 		public void handle(long now) {
             QuadTree quad = new QuadTree(0, new Rectangle(0, 0, canvas.widthProperty().doubleValue(), canvas.heightProperty().doubleValue()));
             quad.clear();
             ArrayList<Ball> neighbors = new ArrayList<>();
-            float avg = 0;
-            int frames = 0;
-            float fps = 0;
+
+
 			if (now - last > NANO_INTERVAL) {
-                avg += 1 / (float)((now - last) / NANO_INTERVAL) * 60;
-                if (frames == 30) {
-                    fps = avg / frames;
-                    avg = 0;
-                    frames = 0;
-                }
-                frames++;
+                fps = (int)(1 / ((now - last) / 1000000000.0) * .5 + fps * .5);
+
 
                 optimize = toggle.isSelected();
-                text.setText("Balls: " + Integer.toString(actors.size()) + " FPS: " + fps);
+                text.setText("Balls: " + actors.size() + " FPS: " + fps);
 
 				for (Ball i: actors) {
 					i.move();
@@ -51,10 +45,12 @@ public class Controller {
 
                 for (Ball i: actors) {
                     boolean colliding = false;
+                    neighbors.clear();
                     ArrayList<Ball> others = quad.retrieve(neighbors, i);
                     for (Ball other: optimize ? others : actors) {
 
                         if (i.isColliding(other)) {
+                            i.resolveCollision(other);
                             i.shape.setFill(Color.RED);
                             colliding = true;
                         }
@@ -78,7 +74,7 @@ public class Controller {
 	public void initialize() {
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                 ev -> {
-                    if (ev.isMiddleButtonDown()) {
+                    if (ev.isMiddleButtonDown() || ev.isShiftDown()) {
                         Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
                         ball.addTo(canvas);
                         actors.add(ball);

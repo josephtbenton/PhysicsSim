@@ -31,7 +31,7 @@ public class Controller {
             ArrayList<Ball> neighbors = new ArrayList<>();
 			if (now - last > NANO_INTERVAL) {
                 optimize = toggle.isSelected();
-                text.setText("Balls: " + Integer.toString(actors.size()));
+                text.setText("Balls: " + Integer.toString(actors.size()) + " FPS: " + ( 1 /((float)(now - last) / NANO_INTERVAL)) * 60);
 
 				for (Ball i: actors) {
 					i.move();
@@ -40,7 +40,8 @@ public class Controller {
 
                 for (Ball i: actors) {
                     boolean colliding = false;
-                    for (Ball other: optimize ? quad.retrieve(neighbors, i) : actors) {
+                    ArrayList<Ball> others = quad.retrieve(neighbors, i);
+                    for (Ball other: optimize ? others : actors) {
 
                         if (i.isColliding(other)) {
                             i.shape.setFill(Color.RED);

@@ -16,7 +16,7 @@
         <Button mnemonicParsing="false" onAction="#start" text="Start" />
         <Button mnemonicParsing="false" onAction="#stop" text="Stop" />
         <Button mnemonicParsing="false" onAction="#clear" text="Clear" />
-        <Label fx:id="text" prefHeight="21.0" prefWidth="78.0" text="Balls: 0" />
+        <Label fx:id="text" prefHeight="21.0" prefWidth="158.0" text="Balls: 0" />
         <CheckBox fx:id="toggle" mnemonicParsing="false" text="Use QuadTree" />
       </children>
     </HBox>

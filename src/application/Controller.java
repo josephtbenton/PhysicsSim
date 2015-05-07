@@ -29,9 +29,20 @@ public class Controller {
             QuadTree quad = new QuadTree(0, new Rectangle(0, 0, canvas.widthProperty().doubleValue(), canvas.heightProperty().doubleValue()));
             quad.clear();
             ArrayList<Ball> neighbors = new ArrayList<>();
+            float avg = 0;
+            int frames = 0;
+            float fps = 0;
 			if (now - last > NANO_INTERVAL) {
+                avg += 1 / (float)((now - last) / NANO_INTERVAL) * 60;
+                if (frames == 30) {
+                    fps = avg / frames;
+                    avg = 0;
+                    frames = 0;
+                }
+                frames++;
+
                 optimize = toggle.isSelected();
-                text.setText("Balls: " + Integer.toString(actors.size()) + " FPS: " + ( 1 /((float)(now - last) / NANO_INTERVAL)) * 60);
+                text.setText("Balls: " + Integer.toString(actors.size()) + " FPS: " + fps);
 
 				for (Ball i: actors) {
 					i.move();

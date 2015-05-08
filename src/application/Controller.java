@@ -2,6 +2,7 @@ package application;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
@@ -42,6 +43,8 @@ public class Controller {
             QuadTree quad = new QuadTree(0, new Rectangle(0, 0, canvas.widthProperty().doubleValue(), canvas.heightProperty().doubleValue()));
             quad.clear();
             ArrayList<Ball> neighbors = new ArrayList<>();
+            HashSet<Ball[]> checked = new HashSet<>();
+
 
 
 			if (now - last > NANO_INTERVAL) {
@@ -59,9 +62,10 @@ public class Controller {
                 for (Ball i: actors) {
                     boolean colliding = false;
                     neighbors.clear();
-                    ArrayList<Ball> others = quad.retrieve(neighbors, i);
-                    for (Ball other: optimize ? others : actors) {
-
+                    quad.retrieve(neighbors, i);
+                    for (Ball other: optimize ? neighbors : actors) {
+                        Ball[] pair = new Ball[]{i, other};
+                        Ball[] pairInv = new Ball[]{other, i};
                         if (i.isColliding(other)) {
                             i.resolveCollision(other);
                             i.shape.setFill(Color.RED);
@@ -80,7 +84,7 @@ public class Controller {
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                 ev -> {
                     if (ev.isMiddleButtonDown() || ev.isShiftDown()) {
-                        Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
+                        Ball ball = new Ball(15, 5, ev.getX(), ev.getY());
                         ball.addTo(canvas);
                         actors.add(ball);
                     }
@@ -98,18 +102,13 @@ public class Controller {
 
 		canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,
                 ev -> {
-                    canvas.getChildren().remove(crosshair);
-                    if (ev.getX() == startX && ev.getY() == startY) {
-                        Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
-                        ball.addTo(canvas);
-                        actors.add(ball);
-                    } else {
-                        Ball ball = new Ball(20, 5, startX, startY);
+                    if (!ev.isShiftDown()) {
+                        canvas.getChildren().remove(crosshair);
+                        Ball ball = new Ball(30, 5, startX, startY);
                         ball.addTo(canvas);
                         actors.add(ball);
                         ball.setSpeed(-(ev.getX() - startX) / 10, -(ev.getY() - startY) / 10);
                     }
-
                 });
 	}
 	@FXML

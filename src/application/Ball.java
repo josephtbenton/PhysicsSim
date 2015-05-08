@@ -50,9 +50,13 @@ public class Ball {
         this.speedY -= 1 / this.mass * impulseY;
         other.speedX -= 1 / other.mass * impulseX;
         other.speedY -= 1 / other.mass * impulseY;
+        this.shape.setTranslateX(this.getX() + this.speedX);
+        this.shape.setTranslateY(this.getY() + this.speedY);
+        other.shape.setTranslateX(other.getX() + other.speedX);
+        other.shape.setTranslateY(other.getY() + other.speedY);
     }*/
 
-    public void resolveCollision(Ball other) {
+    /*public void resolveCollision(Ball other) {
         double dx = this.getX() - other.getX();
         double dy = this.getY() - other.getY();
         double distSquared = dx * dx + dy * dy;
@@ -65,8 +69,8 @@ public class Ball {
             double collX = dx * scale;
             double collY = dy * scale;
             double combMass = this.mass + other.mass;
-            double collWeightA = 2 * this.mass / combMass;
-            double collWeightB = 2 * other.mass / combMass;
+            double collWeightA = e/2 * this.mass / combMass;
+            double collWeightB = e/2 * other.mass / combMass;
             this.speedX += collWeightA * collX;
             this.speedY += collWeightA * collY;
             other.speedX += collWeightB * collX;
@@ -74,9 +78,37 @@ public class Ball {
 
 
         }
+//        this.shape.setTranslateX(this.getX() + this.speedX);
+//        this.shape.setTranslateY(this.getY() + this.speedY);
+//        other.shape.setTranslateX(other.getX() + other.speedX);
+//        other.shape.setTranslateY(other.getY() + other.speedY);
+        this.move();
+        other.move();
 
+    }*/
 
+    public void resolveCollision(Ball other) {
+        double damp = .1;
+        double dx = this.getX() - other.getX();
+        double dy = this.getY() - other.getY();
+        double dvx = other.speedX - this.speedX;
+        double dvy = other.speedY - this.speedY;
+        double dotProduct = dx * dvx + dy * dvy;
+        if (dotProduct > 0) {
+            double angle = Math.atan2(dy, dx);
+            double minDist = this.getRadius() + other.getRadius();
+            double targetX = this.getX() + Math.cos(angle) * minDist;
+            double targetY = this.getY() + Math.sin(angle) * minDist;
+            double ax = (targetX - other.getX()) * e * damp;
+            double ay = (targetY - other.getY()) * e * damp;
+            this.speedX += ax;
+            this.speedY += ay;
+            other.speedX -= ax;
+            other.speedY -= ay;
+        }
     }
+
+
 
 	public void move() {
 		if (isCollidingY()){

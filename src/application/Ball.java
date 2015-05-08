@@ -22,8 +22,8 @@ public class Ball {
 		shape.setTranslateY(y);
 		this.size = size;
 		this.mass = mass;
-		this.speedX = (int)(Math.random()*60 - 30);
-		this.speedY = -10;
+		this.speedX = (int)(Math.random()*30 - 15);
+		this.speedY = 0;
 		this.e = .65;
 	}
 
@@ -33,59 +33,6 @@ public class Ball {
         canvas.getChildren().add(shape);
 	}
 
-    /*public void resolveCollision(Ball other) {
-        double dx = this.getX() - other.getX();
-        double dy = this.getY() - other.getY();
-        double distSquared = dx * dx + dy * dy;
-        double dvx = other.speedX - this.speedX;
-        double dvy = other.speedY - this.speedY;
-        double dotProduct = dx * dvx + dy * dvy;
-        if (dotProduct < 0) return;
-        double e = Math.min(this.e, other.e);
-        double j = -(1 + e) * dotProduct;
-        j /= 1 / this.mass + 1 / other.mass;
-        double impulseX = j * dx;
-        double impulseY = j * dy;
-        this.speedX -= 1 / this.mass * impulseX;
-        this.speedY -= 1 / this.mass * impulseY;
-        other.speedX -= 1 / other.mass * impulseX;
-        other.speedY -= 1 / other.mass * impulseY;
-        this.shape.setTranslateX(this.getX() + this.speedX);
-        this.shape.setTranslateY(this.getY() + this.speedY);
-        other.shape.setTranslateX(other.getX() + other.speedX);
-        other.shape.setTranslateY(other.getY() + other.speedY);
-    }*/
-
-    /*public void resolveCollision(Ball other) {
-        double dx = this.getX() - other.getX();
-        double dy = this.getY() - other.getY();
-        double distSquared = dx * dx + dy * dy;
-        double dvx = other.speedX - this.speedX;
-        double dvy = other.speedY - this.speedY;
-        double dotProduct = dx * dvx + dy * dvy;
-
-        if (dotProduct > 0) {
-            double scale = dotProduct / distSquared;
-            double collX = dx * scale;
-            double collY = dy * scale;
-            double combMass = this.mass + other.mass;
-            double collWeightA = e/2 * this.mass / combMass;
-            double collWeightB = e/2 * other.mass / combMass;
-            this.speedX += collWeightA * collX;
-            this.speedY += collWeightA * collY;
-            other.speedX += collWeightB * collX;
-            other.speedY += collWeightB * collY;
-
-
-        }
-//        this.shape.setTranslateX(this.getX() + this.speedX);
-//        this.shape.setTranslateY(this.getY() + this.speedY);
-//        other.shape.setTranslateX(other.getX() + other.speedX);
-//        other.shape.setTranslateY(other.getY() + other.speedY);
-        this.move();
-        other.move();
-
-    }*/
 
     public void resolveCollision(Ball other) {
         double damp = .1;

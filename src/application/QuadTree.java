@@ -3,21 +3,17 @@ package application;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class QuadTree {
 
-    private int MAX_OBJECTS = 15;
-    private int MAX_LEVELS = 5;
+    private int MAX_OBJECTS = 30;
+    private int MAX_LEVELS = 6;
 
     private int level;
     private ArrayList<Ball> objects;
     private Rectangle bounds;
     private QuadTree[] nodes;
 
-    /*
-     * Constructor
-     */
     public QuadTree(int level, Rectangle bounds) {
         this.level = level;
         objects = new ArrayList<>();
@@ -52,12 +48,9 @@ public class QuadTree {
         double verticalMidpoint = bounds.getX() + (bounds.getWidth() / 2);
         double horizontalMidpoint = bounds.getY() + (bounds.getHeight() / 2);
 
-        // Object can completely fit within the top quadrants
         boolean topQuadrant = (ball.getY() < horizontalMidpoint && ball.getY() + 2 * ball.getRadius() < horizontalMidpoint);
-        // Object can completely fit within the bottom quadrants
         boolean bottomQuadrant = (ball.getY() > horizontalMidpoint);
 
-        // Object can completely fit within the left quadrants
         if (ball.getX() < verticalMidpoint && ball.getX() + 2 * ball.getRadius() < verticalMidpoint) {
             if (topQuadrant) {
                 index = 1;
@@ -66,7 +59,6 @@ public class QuadTree {
                 index = 2;
             }
         }
-        // Object can completely fit within the right quadrants
         else if (ball.getX() > verticalMidpoint) {
             if (topQuadrant) {
                 index = 0;

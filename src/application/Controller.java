@@ -13,6 +13,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 
@@ -20,9 +21,21 @@ public class Controller {
 	private long FRAMES_PER_SEC = 60L;
 	private long NANO_INTERVAL = 1000000000L / FRAMES_PER_SEC;
     private boolean optimize;
+    double startX = 0;
+    double startY = 0;
+    Circle crosshair = new Circle(2, Color.GREEN);
+    @FXML
+    Pane canvas;
+    @FXML
+    Label text;
+    @FXML
+    CheckBox toggle;
+    ArrayList<Ball> actors = new ArrayList<Ball>();
+
 	private AnimationTimer timer = new AnimationTimer() {
 		long last = 0;
         int fps = 0;
+
 
 		@Override
 		public void handle(long now) {
@@ -63,14 +76,6 @@ public class Controller {
 	};
 
 	@FXML
-	Pane canvas;
-    @FXML
-    Label text;
-    @FXML
-    CheckBox toggle;
-	ArrayList<Ball> actors = new ArrayList<Ball>();
-
-	@FXML
 	public void initialize() {
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                 ev -> {
@@ -81,11 +86,29 @@ public class Controller {
                     }
                 });
 
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                ev -> {
+                    canvas.getChildren().add(crosshair);
+                    startX = ev.getX();
+                    startY = ev.getY();
+                    crosshair.setCenterX(startX);
+                    crosshair.setCenterY(startY);
+
+                });
+
 		canvas.addEventHandler(MouseEvent.MOUSE_RELEASED,
                 ev -> {
-                    Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
-                    ball.addTo(canvas);
-                    actors.add(ball);
+                    canvas.getChildren().remove(crosshair);
+                    if (ev.getX() == startX && ev.getY() == startY) {
+                        Ball ball = new Ball(20, 5, ev.getX(), ev.getY());
+                        ball.addTo(canvas);
+                        actors.add(ball);
+                    } else {
+                        Ball ball = new Ball(20, 5, startX, startY);
+                        ball.addTo(canvas);
+                        actors.add(ball);
+                        ball.setSpeed(-(ev.getX() - startX) / 10, -(ev.getY() - startY) / 10);
+                    }
 
                 });
 	}

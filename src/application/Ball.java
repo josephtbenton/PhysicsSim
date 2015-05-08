@@ -8,8 +8,8 @@ import javafx.scene.shape.Circle;
 public class Ball {
 	Circle shape;
 	int mass;
-	int speedX;
-	int speedY;
+	double speedX;
+	double speedY;
 	double size;
 	double e;
 	private ReadOnlyDoubleProperty height, width;
@@ -135,7 +135,7 @@ public class Ball {
         return (other != this) && (((dx * dx) + (dy * dy)) < (rad * rad));
 	}
 
-	public void setSpeed(int speedX, int speedY) {
+	public void setSpeed(double speedX, double speedY) {
 		this.speedX = speedX;
 		this.speedY = speedY;
 	}

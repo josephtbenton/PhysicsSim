@@ -112,4 +112,16 @@ public class QuadTree {
 
         return returnObjects;
     }
+
+    public boolean isEmpty() {
+        return level == 0 && nodes[0] == null && objects.isEmpty();
+    }
+
+    public int depth() {
+        QuadTree quad = this;
+        if (nodes[0] == null) {
+            return level;
+        }
+        return Math.max(Math.max(Math.max(nodes[0].depth(), nodes[1].depth()), nodes[2].depth()), nodes[3].depth());
+    }
 }

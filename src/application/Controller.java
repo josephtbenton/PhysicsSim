@@ -64,7 +64,7 @@ public class Controller {
                     quad.insert(i);
 				}
                 for (Ball i: actors) {
-                    boolean colliding = false;
+                    i.resetPressure();
                     neighbors.clear();
                     quad.retrieve(neighbors, i);
                     for (Ball other: optimize ? neighbors : actors) {
@@ -72,11 +72,8 @@ public class Controller {
                         Ball[] pairInv = new Ball[]{other, i};
                         if (i.isColliding(other)) {
                             i.resolveCollision(other);
-                            i.shape.setFill(Color.RED);
-                            colliding = true;
                         }
                     }
-                    if (!colliding) i.shape.setFill(Color.BLUE);
                 }
                 last = now;
 			}
@@ -93,7 +90,7 @@ public class Controller {
                     pointer.setEndY(startY - (ev.getY() - startY) / 2);
                     if (ev.isMiddleButtonDown() || ev.isShiftDown()) {
                         spray = true;
-                        Ball ball = new Ball(15, 5, startX, startY);
+                        Ball ball = new Ball(20, 5, startX, startY);
                         ball.addTo(canvas);
                         actors.add(ball);
                         ball.setSpeed(-(ev.getX() - startX) / 10, -(ev.getY() - startY) / 10);

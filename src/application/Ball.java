@@ -8,16 +8,18 @@ import javafx.scene.shape.Circle;
 public class Ball {
 	Circle shape;
 	int mass;
+	double pressure;
 	double speedX;
 	double speedY;
 	double size;
 	double e;
+	double presCoef;
 	private ReadOnlyDoubleProperty height, width;
     Pane canvas;
 
 
 	public Ball (double size, int mass, double x, double y) {
-		shape = new Circle(0, 0, size, Color.BLUE);
+		shape = new Circle(0, 0, size, new Color(1 - .01, 0, 0, 1));
 		shape.setTranslateX(x);
 		shape.setTranslateY(y);
 		this.size = size;
@@ -25,6 +27,8 @@ public class Ball {
 		this.speedX = (int)(Math.random()*30 - 15);
 		this.speedY = 0;
 		this.e = .65;
+		presCoef = .15;
+		pressure = 1;
 	}
 
 	public void addTo(Pane canvas) {
@@ -55,9 +59,12 @@ public class Ball {
         }
     }
 
-
+	private void dispPressure() {
+        shape.setFill(new Color((1 - .01) / (pressure * pressure) + .01, 0, 0, 1));
+	}
 
 	public void move() {
+        dispPressure();
 		if (isCollidingY()){
 			bounceY();
 		} else if (isCollidingX()) {
@@ -82,7 +89,7 @@ public class Ball {
 	
 	private void bounceX() {
         shape.setTranslateY(shape.getTranslateY() + speedY);
-        shape.setTranslateX(shape.getTranslateX() > 0 + size ? width.doubleValue() - 1 - size: 1 + size);
+        shape.setTranslateX(shape.getTranslateX() > 0 + size ? width.doubleValue() - 1 - size : 1 + size);
 		speedX *= -e;
 	}
 
@@ -94,6 +101,7 @@ public class Ball {
 		width = canvas.widthProperty();
 		height = canvas.heightProperty();
 		if (shape.getTranslateY() + size > height.doubleValue()){
+			pressure += presCoef;
 			return true;
 		}
 		return false;
@@ -102,6 +110,7 @@ public class Ball {
 		width = canvas.widthProperty();
 		height = canvas.heightProperty();
 		if (shape.getTranslateX() + size >= width.doubleValue() || shape.getTranslateX() - size <= 0){
+			pressure += presCoef;
 			return true;
 		}
 		return false;
@@ -111,7 +120,12 @@ public class Ball {
         double dx = this.getX() - other.getX();
         double dy = this.getY() - other.getY();
         double rad = this.getRadius() + other.getRadius();
-        return (other != this) && (((dx * dx) + (dy * dy)) < (rad * rad));
+        if((other != this) && (((dx * dx) + (dy * dy)) < (rad * rad))) {
+
+			pressure += presCoef;
+			return true;
+		}
+		return false;
 	}
 
 	public void setSpeed(double speedX, double speedY) {
@@ -129,5 +143,9 @@ public class Ball {
 
     public double getRadius() {
         return shape.getRadius();
+    }
+
+    public void resetPressure() {
+        pressure = 1;
     }
 }
